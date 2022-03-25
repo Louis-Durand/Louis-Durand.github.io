@@ -3,13 +3,13 @@
 
 <head>
 	<title>My profil page</title>
-	<link rel="stylesheet" type="text/css" href={{stylesheet}}>
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <header>
 	<nav>
 		<ul>
 			<li><a href="#pictures">My pictures</a></li>
-			<li class="funFact">Fun Fact: My daily lucky number is {{luckyNbr}}</li>
+			<li class="funFact">Fun Fact: My daily lucky number is 3</li>
 		</ul>
 	</nav>
 </header>
@@ -38,9 +38,9 @@
 </body>
 <div id="pictures" class="picture-galery">
 	<h1>My pictures</h1>
-	{% for value in images %}
-	<img class="picture-galery" src="{{value}}" alt="image">
-	{% endfor %}
+	<img class="picture-galery" src="/static/img/neva.jpg" alt="image">
+	<img class="picture-galery" src="/static/img/murmansk_train_station.jpg" alt="image">
+	<img class="picture-galery" src="/static/img/aliosha_view.jpg" alt="image">
 </div>
 
 </html>
