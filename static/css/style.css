@@ -1,0 +1,68 @@
+body {
+    margin: 60px auto;
+    width: 70%;
+    background-image: url("/static/img/train_snow.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#header {
+    position: fixed;
+}
+
+.mainText {
+    background-color: rgba(255, 255, 255, 0.493);
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.funFact {
+    float:right;
+    color:rgba(209, 61, 93, 0.842);
+}
+
+nav ul, footer ul {
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    padding: 0px;
+    list-style: none;
+    font-weight: bold;
+}
+nav ul li, footer ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #999;
+}
+h2 {
+    font-size: 1em;
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+}
+p {
+    font-size: 1.5em;
+    line-height: 1.4em;
+    color: #333;
+}
+ul.posts { 
+    margin: 20px auto 40px; 
+    font-size: 1.5em;
+}
+
+ul.posts li {
+    list-style: none;
+}
+
+.picture-galery img {
+    border-radius: 12px;
+    max-width: 100%;
+    height: auto;
+}
+
+.picture-galery h1 {
+    background-color: rgba(71, 226, 226, 0.671);
+    border-radius: 25px;
+    padding: 20px;
+}
