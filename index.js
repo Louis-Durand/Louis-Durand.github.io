@@ -9,41 +9,7 @@ import { createSlider, updateSliderDot } from './src/slider/slider.js'
 const data = await loadData();
 const keyframes = computeFrames(data);
 
-const BARS_MODE = 'bars';
-const MAP_MODE = 'map';
-
-let mode = MAP_MODE;
-
-let timer;
 let currentFrameNumber = 0;
-
-function displayVisualizationByMode(new_mode) {
-    switch (new_mode) {
-        case BARS_MODE:
-            mode = new_mode;
-            showBars(svg, currentFrameNumber, keyframes);
-            break;
-
-        case MAP_MODE:
-            mode = new_mode;
-            showMap(svg, keyframes[currentFrameNumber]);
-            break;
-    }
-}
-
-function showMapLegendByMode(new_mode) {
-    const mapLegendEl = document.getElementById("map-legend");
-    switch (new_mode) {
-        case BARS_MODE:
-            mapLegendEl.style.display = 'none';
-            break;
-
-        case MAP_MODE:
-            mapLegendEl.style.display = 'block';
-            showLegend(legendSvg);
-            break;
-    }
-}
 
 const body = d3.select("body");
 const head = body.append("div").attr("id", "head").attr("align", "center")
@@ -69,7 +35,7 @@ const slider_panel = body.append("div")
     .style("align-items", "center")
 createSlider(slider_panel, (newFrameNumber) => {
     currentFrameNumber = newFrameNumber
-    displayVisualizationByMode(mode)
+    showMap(svg, keyframes[currentFrameNumber]);
 })
 
 const main_panel = body.append("div").attr("id", "main_panel");
