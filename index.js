@@ -136,7 +136,7 @@ const state_click = function (d) {
 draw_map(default_year);
 
 function draw_map(year) {
-    const link_master = "ressources/regions-et-collectivites-doutre-mer-millesime-france"
+    const link_master = "ressources/regions-et-collectivites-doutre-mer-millesime-france.csv"
     d3.csv(link_master, function (data) {
         const region_name = data.Nom;
         const state_points = JSON.parse(data.GeoPoint);
