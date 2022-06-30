@@ -66,6 +66,8 @@ const tooltip = d3
     .style("border-width", "1px")
     .style("border-radius", "5px")
     .style("padding", "10px");
+const color_link = "https://raw.githubusercontent.com/Emidiant/crime-in-usa-visualisation/main/coordinates_extraction/state_coordinates/csv/color.csv";
+
 const slider = d3
     .sliderHorizontal()
     .min(1941)
