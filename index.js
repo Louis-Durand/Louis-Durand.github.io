@@ -1,3 +1,6 @@
+import { prepareBarData, buildBarFrame, showBars } from "./src/bars/bars.js";
+import { showMap } from './src/map/map.js';
+import { showLegend } from "./src/map/legend.js";
 import { loadData } from "./src/common/loadData.js";
 import { computeFrames } from './src/common/handleKeyFrames.js'
 import { createSlider, updateSliderDot } from './src/slider/slider.js'
