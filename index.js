@@ -138,45 +138,21 @@ function draw_map(year) {
         const region_name = data.region;
         const state_points = JSON.parse(data.new_coordinates);
         const red_fill = d3.interpolateReds(data[year]);
-        if (region_name !== "Alaska" && region_name !== "Hawaii") {
-            if (data.type !== "multipolygon") {
+        if (data.type !== "multipolygon") {
+            svg_map
+                .append("polyline")
+                .attr("class", region_name)
+                .style("fill", red_fill)
+                .text(region_name)
+                .attr("points", state_points);
+        } else {
+            for (let i = 0; i < state_points.length; i += 1) {
                 svg_map
                     .append("polyline")
                     .attr("class", region_name)
+                    .text(data.state)
                     .style("fill", red_fill)
-                    .text(region_name)
-                    .attr("points", state_points);
-            } else {
-                for (let i = 0; i < state_points.length; i += 1) {
-                    svg_map
-                        .append("polyline")
-                        .attr("class", region_name)
-                        .text(data.state)
-                        .style("fill", red_fill)
-                        .attr("points", state_points[i]);
-                }
-            }
-        } else {
-            if (region_name === "Alaska") {
-                for (let i = 0; i < state_points.length; i += 1) {
-                    svg_map
-                        .append("polyline")
-                        .text(region_name)
-                        .attr("class", region_name)
-                        .style("fill", red_fill)
-                        .attr("points", state_points[i])
-                        .attr("transform", "translate(-90,-1075)");
-                }
-            } else {
-                for (let i = 0; i < state_points.length; i += 1) {
-                    svg_map
-                        .append("polyline")
-                        .attr("class", region_name)
-                        .text(region_name)
-                        .style("fill", red_fill)
-                        .attr("points", state_points[i])
-                        .attr("transform", "translate(680, 250)");
-                }
+                    .attr("points", state_points[i]);
             }
         }
         svg_map.selectAll("polyline")
@@ -187,7 +163,5 @@ function draw_map(year) {
             .on("click", state_click)
             .on("mouseleave", mouseleave);
     });
-
-    // перемещение карты после отрисовки
     svg_map.attr("transform", "translate(-20,-25)")
 }
