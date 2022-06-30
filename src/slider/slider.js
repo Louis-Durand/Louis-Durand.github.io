@@ -2,8 +2,8 @@ var formatDateUnderTicker = d3.timeFormat("%b %y");
 var formatDateLabel = d3.timeFormat("%d %b %Y");
 
 // First and last dates in the dataset
-var startDate = new Date("2020-01-22"),
-    endDate = new Date("2021-05-29");
+var startDate = new Date("1945"),
+    endDate = new Date("2022");
 
 var margin = {right:50, left:50},
     width = 585 - margin.left - margin.right,
@@ -11,7 +11,6 @@ var margin = {right:50, left:50},
 
 // Number of keyframes (of dates in dataset)
 var maxRangeValue = 493;
-
 
 var slider;
 var handle;
@@ -94,7 +93,3 @@ export function updateSliderDot(new_x) {
     label.attr("x", new_x)
         .text(formatDateLabel(x.invert(new_x)));
 }
-
-
-
-

@@ -52,7 +52,7 @@ function ticker(svg, keyframe) {
  * 
  * TODO: Многое нуждается в доработке
  */
-export function showMap(svg, keyframe) {
+export function createMap(svg, keyframe) {
     svg.selectAll("*").remove();
 
     d3.select("map").remove();
