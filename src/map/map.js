@@ -19,7 +19,7 @@ const projection = d3.geoEqualEarth();
 const path = d3.geoPath(projection);
 const outline = ({ type: "Sphere" });
 const world = await loadCountryData();
-const countries = topojson.feature(world, world.objects.FRA_adm2);
+const countries = topojson.feature(world, world);
 
 
 // Функция для закрашивания стран на карте.
