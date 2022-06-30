@@ -1,26 +1,26 @@
-let memoizedCovidData;
-let memoizedCountryData
+let memorizedCovidData;
+let memorizedCountryData
 
 // Load data
 async function loadData() {
-    if (memoizedCovidData !== undefined) {
-        return memoizedCovidData;
+    if (memorizedCovidData !== undefined) {
+        return memorizedCovidData;
     }
     // Data from notebook
-    memoizedCovidData = await d3.csv(
+    memorizedCovidData = await d3.csv(
         "../../ressources/augmented_covid_19.csv", d3.autoType);
-    return memoizedCovidData
+    return memorizedCovidData
 }
 
 async function loadCountryData() {
-    if (memoizedCountryData !== undefined) {
-        return memoizedCountryData;
+    if (memorizedCountryData !== undefined) {
+        return memorizedCountryData;
     }
     // Data from topo-json
-    memoizedCountryData = await d3.json(
-        "../../ressources/france.json", d3.autoType);
+    memorizedCountryData = await d3.json(
+        "../../ressources/a-dep2021.json", d3.autoType);
 
-    return memoizedCountryData
+    return memorizedCountryData
 }
 
 export { loadData, loadCountryData }

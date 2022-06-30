@@ -8,24 +8,83 @@ import { createSlider, updateSliderDot } from './src/slider/slider.js'
 // Load data
 const data = await loadData();
 const keyframes = computeFrames(data);
-const base_year = 1941
 
+const BARS_MODE = 'bars';
+const MAP_MODE = 'map';
+
+let mode = MAP_MODE;
+
+let timer;
 let currentFrameNumber = 0;
+
+function displayVisualizationByMode(new_mode) {
+    switch (new_mode) {
+        case BARS_MODE:
+            mode = new_mode;
+            showBars(svg, currentFrameNumber, keyframes);
+            break;
+
+        case MAP_MODE:
+            mode = new_mode;
+            showMap(svg, keyframes[currentFrameNumber]);
+            break;
+    }
+}
+
+function showMapLegendByMode(new_mode) {
+    const mapLegendEl = document.getElementById("map-legend");
+    switch (new_mode) {
+        case BARS_MODE:
+            mapLegendEl.style.display = 'none';
+            break;
+
+        case MAP_MODE:
+            mapLegendEl.style.display = 'block';
+            showLegend(legendSvg);
+            break;
+    }
+}
 
 const body = d3.select("body");
 const head = body.append("div").attr("id", "head").attr("align", "center")
-head.append("h1").text("French elections and immigration map")
+head.append("h1").text("Covid-19 Country Spread")
     .attr("class", "head")
     .style("font-family", "Montserrat")
     .style("font", "bold")
     .style("font-size", `50px`);
 
+const main_button_panel = body.append("div").attr("id", "main_button_panel").attr("align", "center")
+const mapChartButton = main_button_panel
+    .append("button")
+    .attr("id", "map_button")
+    .text("Map Chart")
+    .style("font-family", "Montserrat")
+    .style("margin-right", "4em")
+    .on("click", function () {
+        
+        showMapLegendByMode(MAP_MODE);
+
+        d3.selectAll("*").interrupt();
+        svg.selectAll("*").remove();
+    
+        displayVisualizationByMode(MAP_MODE);
+    })
+
 const barChartButton = main_button_panel
     .append("button")
     .attr("id", "bar_button")
-    .text("Display immigration")
+    .text("Bar Chart")
     .style("font-family", "Montserrat")
     .on("click", function () {
+    
+        showMapLegendByMode(BARS_MODE);
+
+        d3.selectAll("*").interrupt();
+        svg.selectAll("*").remove();
+        buildBarFrame(svg, keyframes);
+
+        displayVisualizationByMode(BARS_MODE);
+
     })
 
 const slider_panel = body.append("div")
@@ -46,117 +105,8 @@ const mapLegend = main_panel.append("div")
     .attr("style", "display:none; height:30px; width:400px; margin-bottom:50px;");
 
 var svg = main_panel.append("svg").attr("id", "main_svg");
-const svg_map = mapLegend.append("svg")
-    .attr("width", 800)
-    .attr("height", 400)
-    .append("g");
+var legendSvg = mapLegend.append("svg");
 
-svg_map.append("g")
-    .attr("transform", "translate(555,30)")
-    .append(() => Legend(
-        d3.scaleSequential([0.00032, 0.00332], d3.interpolateReds), {
-        width: 260,
-        ticks: 5,
-        title: "Murder percentage of total crimes in the state",
-        tickFormat: "%"
-    }));
-
-const mouseover = function (d) {
-    tooltip.style("visibility", "visible");
-
-    d3.select(this)
-        .style("stroke", "black")
-        .style("opacity", mouse_over_opacity);
-};
-
-const mouseleave = function (d) {
-    tooltip.style("visibility", "hidden");
-
-    d3.select(this)
-        .style("stroke", "grey")
-        .style("opacity", default_opacity);
-};
-
-const mousemove = function (d) {
-    const state_name = d.target.firstChild.nodeValue;
-
-    tooltip
-        .style("top", d.pageY + "px")
-        .style("left", d.pageX + "px")
-        .html(state_name);
-};
-
-const state_click = function (d) {
-    state_name = d.target.firstChild.nodeValue;
-    state_div.text(state_name);
-    crime_chart.selectAll("g").remove();
-    crime_chart.selectAll("path").remove();
-    crime = d3.select(".chart1").select("select").property("value");
-    draw_crime_graph(crime, state_name);
-    murder_chart.selectAll("g").remove();
-    murder_chart.selectAll("path").remove();
-    murder_chart.select("image").remove();
-    murder_chart.select("text").remove();
-    murder_weapon = d3.select(".chart2").select("select").property("value");
-    draw_murder_graph(murder_weapon, state_name);
-};
-draw_map(base_year);
-function draw_map(year) {
-    const link_master = "https://raw.githubusercontent.com/Emidiant/crime-in-usa-visualisation/main/coordinates_extraction/state_coordinates/csv/polygon.csv"
-    d3.csv(link_master, function (data) {
-        const state_name = data.state;
-        const state_points = JSON.parse(data.new_coordinates);
-        const red_fill = d3.interpolateReds(data[year]);
-        if (state_name !== "Alaska" && state_name !== "Hawaii") {
-            if (data.type !== "multipolygon") {
-                svg_map
-                    .append("polyline")
-                    .attr("class", state_name)
-                    .style("fill", red_fill)
-                    .text(state_name)
-                    .attr("points", state_points);
-            } else {
-                for (let i = 0; i < state_points.length; i += 1) {
-                    svg_map
-                        .append("polyline")
-                        .attr("class", state_name)
-                        .text(data.state)
-                        .style("fill", red_fill)
-                        .attr("points", state_points[i]);
-                }
-            }
-        } else {
-            if (state_name === "Alaska") {
-                for (let i = 0; i < state_points.length; i += 1) {
-                    svg_map
-                        .append("polyline")
-                        .text(state_name)
-                        .attr("class", state_name)
-                        .style("fill", red_fill)
-                        .attr("points", state_points[i])
-                        .attr("transform", "translate(-90,-1075)");
-                }
-            } else {
-                for (let i = 0; i < state_points.length; i += 1) {
-                    svg_map
-                        .append("polyline")
-                        .attr("class", state_name)
-                        .text(state_name)
-                        .style("fill", red_fill)
-                        .attr("points", state_points[i])
-                        .attr("transform", "translate(680, 250)");
-                }
-            }
-        }
-        svg_map.selectAll("polyline")
-            .attr("stroke", "grey")
-            .attr("opacity", default_opacity)
-            .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
-            .on("click", state_click)
-            .on("mouseleave", mouseleave);
-    });
-
-    // перемещение карты после отрисовки
-    svg_map.attr("transform", "translate(-20,-25)")
-}
+prepareBarData(data, keyframes);
+buildBarFrame(svg, keyframes);
+showMap(svg, keyframes);
