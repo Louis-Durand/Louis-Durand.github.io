@@ -61,45 +61,45 @@ svg_map.append("g")
         tickFormat: "%"
     }));
 
-    const mouseover = function (d) {
-        tooltip.style("visibility", "visible");
-    
-        d3.select(this)
-            .style("stroke", "black")
-            .style("opacity", mouse_over_opacity);
-    };
-    
-    const mouseleave = function (d) {
-        tooltip.style("visibility", "hidden");
-    
-        d3.select(this)
-            .style("stroke", "grey")
-            .style("opacity", default_opacity);
-    };
-    
-    const mousemove = function (d) {
-        const state_name = d.target.firstChild.nodeValue;
-    
-        tooltip
-            .style("top", d.pageY + "px")
-            .style("left", d.pageX + "px")
-            .html(state_name);
-    };
-    
-    const state_click = function (d) {
-        state_name = d.target.firstChild.nodeValue;
-        state_div.text(state_name);
-        crime_chart.selectAll("g").remove();
-        crime_chart.selectAll("path").remove();
-        crime = d3.select(".chart1").select("select").property("value");
-        draw_crime_graph(crime, state_name);
-        murder_chart.selectAll("g").remove();
-        murder_chart.selectAll("path").remove();
-        murder_chart.select("image").remove();
-        murder_chart.select("text").remove();
-        murder_weapon = d3.select(".chart2").select("select").property("value");
-        draw_murder_graph(murder_weapon, state_name);
-    };
+const mouseover = function (d) {
+    tooltip.style("visibility", "visible");
+
+    d3.select(this)
+        .style("stroke", "black")
+        .style("opacity", mouse_over_opacity);
+};
+
+const mouseleave = function (d) {
+    tooltip.style("visibility", "hidden");
+
+    d3.select(this)
+        .style("stroke", "grey")
+        .style("opacity", default_opacity);
+};
+
+const mousemove = function (d) {
+    const state_name = d.target.firstChild.nodeValue;
+
+    tooltip
+        .style("top", d.pageY + "px")
+        .style("left", d.pageX + "px")
+        .html(state_name);
+};
+
+const state_click = function (d) {
+    state_name = d.target.firstChild.nodeValue;
+    state_div.text(state_name);
+    crime_chart.selectAll("g").remove();
+    crime_chart.selectAll("path").remove();
+    crime = d3.select(".chart1").select("select").property("value");
+    draw_crime_graph(crime, state_name);
+    murder_chart.selectAll("g").remove();
+    murder_chart.selectAll("path").remove();
+    murder_chart.select("image").remove();
+    murder_chart.select("text").remove();
+    murder_weapon = d3.select(".chart2").select("select").property("value");
+    draw_murder_graph(murder_weapon, state_name);
+};
 draw_map(base_year);
 function draw_map(year) {
     const link_master = "https://raw.githubusercontent.com/Emidiant/crime-in-usa-visualisation/main/coordinates_extraction/state_coordinates/csv/polygon.csv"
@@ -145,7 +145,7 @@ function draw_map(year) {
                         .style("fill", red_fill)
                         .attr("points", state_points[i])
                         .attr("transform", "translate(680, 250)");
-              }
+                }
             }
         }
         svg_map.selectAll("polyline")
@@ -155,8 +155,8 @@ function draw_map(year) {
             .on("mousemove", mousemove)
             .on("click", state_click)
             .on("mouseleave", mouseleave);
-});
+    });
 
-// перемещение карты после отрисовки
-svg_map.attr("transform", "translate(-20,-25)")
+    // перемещение карты после отрисовки
+    svg_map.attr("transform", "translate(-20,-25)")
 }
