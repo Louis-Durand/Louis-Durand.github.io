@@ -47,14 +47,6 @@ svg_map.append("g")
         tickFormat: "%"
     }));
 
-const immigrationButton = main_button_panel
-    .append("button")
-    .attr("id", "immigration_button")
-    .text("Show immigration")
-    .style("font-family", "Montserrat")
-    .on("click", function () {
-    })
-
 const tooltip = d3
     .select(".div_map_slider")
     .append("div")
