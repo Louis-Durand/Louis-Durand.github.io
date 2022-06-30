@@ -8,7 +8,7 @@ async function loadData() {
     }
     // Data from notebook
     memoizedCovidData = await d3.csv(
-        "../../resources/augmented_covid_19.csv", d3.autoType);
+        "../../ressources/augmented_covid_19.csv", d3.autoType);
     return memoizedCovidData
 }
 
@@ -18,7 +18,7 @@ async function loadCountryData() {
     }
     // Data from topo-json
     memoizedCountryData = await d3.json(
-        "../../resources/countries-50m.json", d3.autoType);
+        "../../ressources/countries-50m.json", d3.autoType);
 
     return memoizedCountryData
 }
