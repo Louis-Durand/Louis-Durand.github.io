@@ -9,6 +9,9 @@ import { createSlider, updateSliderDot } from './src/slider/slider.js'
 const data = await loadData();
 const keyframes = computeFrames(data);
 const default_year = 1941;
+const default_opacity = 0.8;
+const mouse_over_opacity = 1;
+let region_name = "National";
 
 let currentFrameNumber = 0;
 
