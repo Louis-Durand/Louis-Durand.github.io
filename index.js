@@ -136,12 +136,12 @@ const state_click = function (d) {
 draw_map(default_year);
 
 function draw_map(year) {
-    const link_master = "ressources/regions.csv"
+    const link_master = "ressources/regions-et-collectivites-doutre-mer-millesime-france"
     d3.csv(link_master, function (data) {
-        const region_name = data.region;
-        const state_points = JSON.parse(data.new_coordinates);
+        const region_name = data.Nom;
+        const state_points = JSON.parse(data.GeoPoint);
         const red_fill = d3.interpolateReds(data[year]);
-        if (data.type !== "multipolygon") {
+        if (data.GeoShape !== "Multipolygon") {
             svg_map
                 .append("polyline")
                 .attr("class", region_name)
