@@ -8,7 +8,7 @@ async function loadData() {
     }
     // Data from notebook
     memoizedCovidData = await d3.csv(
-        "https://raw.githubusercontent.com/Louis-Durand/Louis-Durand.github.io/main/resources/augmented_covid_19.csv", d3.autoType);
+        "../../resources/augmented_covid_19.csv", d3.autoType);
     return memoizedCovidData
 }
 
@@ -18,7 +18,7 @@ async function loadCountryData() {
     }
     // Data from topo-json
     memoizedCountryData = await d3.json(
-        "https://raw.githubusercontent.com/Louis-Durand/Louis-Durand.github.io/main/resources/countries-50m.json", d3.autoType);
+        "../../resources/countries-50m.json", d3.autoType);
 
     return memoizedCountryData
 }
