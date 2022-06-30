@@ -115,62 +115,62 @@ const mouseleave = function (d) {
 };
 
 const mousemove = function (d) {
-    const state_name = d.target.firstChild.nodeValue;
+    const region_name = d.target.firstChild.nodeValue;
 
     tooltip
         .style("top", d.pageY + "px")
         .style("left", d.pageX + "px")
-        .html(state_name);
+        .html(region_name);
 };
 
 const state_click = function (d) {
-    state_name = d.target.firstChild.nodeValue;
-    state_div.text(state_name);
+    region_name = d.target.firstChild.nodeValue;
+    state_div.text(region_name);
     crime_chart.selectAll("g").remove();
     crime_chart.selectAll("path").remove();
     crime = d3.select(".chart1").select("select").property("value");
-    draw_crime_graph(crime, state_name);
+    draw_crime_graph(crime, region_name);
     murder_chart.selectAll("g").remove();
     murder_chart.selectAll("path").remove();
     murder_chart.select("image").remove();
     murder_chart.select("text").remove();
     murder_weapon = d3.select(".chart2").select("select").property("value");
-    draw_murder_graph(murder_weapon, state_name);
+    draw_murder_graph(murder_weapon, region_name);
 };
 
 draw_map(default_year);
 
 function draw_map(year) {
-    const link_master = "https://raw.githubusercontent.com/Emidiant/crime-in-usa-visualisation/main/coordinates_extraction/state_coordinates/csv/polygon.csv"
+    const link_master = "ressources/regions.csv"
     d3.csv(link_master, function (data) {
-        const state_name = data.state;
+        const region_name = data.region;
         const state_points = JSON.parse(data.new_coordinates);
         const red_fill = d3.interpolateReds(data[year]);
-        if (state_name !== "Alaska" && state_name !== "Hawaii") {
+        if (region_name !== "Alaska" && region_name !== "Hawaii") {
             if (data.type !== "multipolygon") {
                 svg_map
                     .append("polyline")
-                    .attr("class", state_name)
+                    .attr("class", region_name)
                     .style("fill", red_fill)
-                    .text(state_name)
+                    .text(region_name)
                     .attr("points", state_points);
             } else {
                 for (let i = 0; i < state_points.length; i += 1) {
                     svg_map
                         .append("polyline")
-                        .attr("class", state_name)
+                        .attr("class", region_name)
                         .text(data.state)
                         .style("fill", red_fill)
                         .attr("points", state_points[i]);
                 }
             }
         } else {
-            if (state_name === "Alaska") {
+            if (region_name === "Alaska") {
                 for (let i = 0; i < state_points.length; i += 1) {
                     svg_map
                         .append("polyline")
-                        .text(state_name)
-                        .attr("class", state_name)
+                        .text(region_name)
+                        .attr("class", region_name)
                         .style("fill", red_fill)
                         .attr("points", state_points[i])
                         .attr("transform", "translate(-90,-1075)");
@@ -179,8 +179,8 @@ function draw_map(year) {
                 for (let i = 0; i < state_points.length; i += 1) {
                     svg_map
                         .append("polyline")
-                        .attr("class", state_name)
-                        .text(state_name)
+                        .attr("class", region_name)
+                        .text(region_name)
                         .style("fill", red_fill)
                         .attr("points", state_points[i])
                         .attr("transform", "translate(680, 250)");
