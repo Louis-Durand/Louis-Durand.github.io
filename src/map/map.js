@@ -30,7 +30,7 @@ const color = d3.scaleSequential()
 
 // Функция для вывода даты.
 function ticker(svg, keyframe) {
-    const formatDate = d3.utcFormat("%d %B %Y")
+    const formatDate = d3.utcFormat("%Y")
 
     const now = svg.append("text")
         .style("font", "bold Montserrat")

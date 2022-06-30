@@ -53,38 +53,12 @@ head.append("h1").text("Covid-19 Country Spread")
     .style("font", "bold")
     .style("font-size", `50px`);
 
-const main_button_panel = body.append("div").attr("id", "main_button_panel").attr("align", "center")
-const mapChartButton = main_button_panel
+const immigrationButton = main_button_panel
     .append("button")
-    .attr("id", "map_button")
-    .text("Map Chart")
-    .style("font-family", "Montserrat")
-    .style("margin-right", "4em")
-    .on("click", function () {
-        
-        showMapLegendByMode(MAP_MODE);
-
-        d3.selectAll("*").interrupt();
-        svg.selectAll("*").remove();
-    
-        displayVisualizationByMode(MAP_MODE);
-    })
-
-const barChartButton = main_button_panel
-    .append("button")
-    .attr("id", "bar_button")
-    .text("Bar Chart")
+    .attr("id", "immigration_button")
+    .text("Show immigration")
     .style("font-family", "Montserrat")
     .on("click", function () {
-    
-        showMapLegendByMode(BARS_MODE);
-
-        d3.selectAll("*").interrupt();
-        svg.selectAll("*").remove();
-        buildBarFrame(svg, keyframes);
-
-        displayVisualizationByMode(BARS_MODE);
-
     })
 
 const slider_panel = body.append("div")
